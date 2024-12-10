@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: jude
+      author: piyumi
       changes:
         - createTable:
-            tableName: vendor
+            tableName: customer
             columns:
               - column:
                   name: id
@@ -15,33 +15,33 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: username
-                  type: varchar(30)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
                   name: email
-                  type: varchar(50)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
                   name: password
-                  type: varchar(20)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
                   name: phone
-                  type: bigint(10)
+                  type: bigint(14)
                   constraints:
                     nullable: true
   - changeSet:
       id: 2
-      author: jude
+      author: piyumi
       changes:
         - addColumn:
-            tableName: vendor
+            tableName: customer
             columns:
               - column:
-                  name: is_admin
+                  name: is_premium
                   type: boolean
                   defaultValue: false
                   constraints:

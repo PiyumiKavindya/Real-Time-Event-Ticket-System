@@ -1,7 +1,11 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: jude
+      author: piyumi
+      preConditions:
+        - not:
+            tableExists:
+              tableName: ticket_log
       changes:
         - createTable:
             tableName: ticket_log
@@ -20,12 +24,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: vendor_id
-                  type: bigint(4)
+                  type: bigint
                   constraints:
                     nullable: true
               - column:
                   name: customer_id
-                  type: bigint(4)
+                  type: bigint
                   constraints:
                     nullable: true
               - column:

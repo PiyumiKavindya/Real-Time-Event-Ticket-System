@@ -1,49 +1,48 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: jude
+      author: piyumi
       changes:
         - createTable:
-            tableName: customer
+            tableName: vendor
             columns:
               - column:
                   name: id
-                  type: int
+                  type: bigint
                   autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
                   name: username
-                  type: varchar(255)
+                  type: varchar(30)
                   constraints:
                     nullable: false
               - column:
                   name: email
-                  type: varchar(255)
+                  type: varchar(50)
                   constraints:
                     nullable: false
               - column:
                   name: password
-                  type: varchar(255)
+                  type: varchar(20)
                   constraints:
                     nullable: false
               - column:
                   name: phone
-                  type: bigint(14)
+                  type: bigint(10)
                   constraints:
                     nullable: true
   - changeSet:
       id: 2
-      author: jude
+      author: piyumi
       changes:
         - addColumn:
-            tableName: customer
+            tableName: vendor
             columns:
               - column:
-                  name: is_premium
+                  name: is_admin
                   type: boolean
                   defaultValue: false
                   constraints:
                     nullable: false
-
