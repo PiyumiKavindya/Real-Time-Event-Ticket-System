@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: jude
+      author: piyumi
       changes:
         - createTable:
             tableName: config
@@ -33,21 +33,3 @@ databaseChangeLog:
                   type: bigint(3)
                   constraints:
                     nullable: false
-  - changeSet:
-      id: 2
-      author: jude
-      changes:
-        - dropColumn:
-            tableName: config
-            columns:
-              - column:
-                  name: available_tickets
-  - changeSet:
-      id: 3
-      author: jude
-      changes:
-        - dropColumn:
-            tableName: config
-            columns:
-              - column:
-                  name: released_tickets

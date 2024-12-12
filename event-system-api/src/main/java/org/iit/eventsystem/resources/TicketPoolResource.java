@@ -1,6 +1,6 @@
-package org.iit.eventsystem.dto;
+package org.iit.eventsystem.resources;
 
-public class TicketPoolStatus {
+public class TicketPoolResource {
     private long availableTickets;
     private long releasedTickets;
     private long totalTickets;
