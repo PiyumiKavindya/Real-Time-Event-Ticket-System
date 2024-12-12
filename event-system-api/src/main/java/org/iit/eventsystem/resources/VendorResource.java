@@ -1,9 +1,9 @@
-package org.iit.eventsystem.dto;
+package org.iit.eventsystem.resources;
 
 import lombok.Data;
 
 @Data
-public class VendorDTO {
+public class VendorResource {
     private String username;
     private String email;
     private String password;

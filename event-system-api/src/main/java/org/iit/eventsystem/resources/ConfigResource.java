@@ -1,9 +1,9 @@
-package org.iit.eventsystem.dto;
+package org.iit.eventsystem.resources;
 
 import lombok.Data;
 
 @Data
-public class ConfigDto {
+public class ConfigResource {
     private int totalTickets;
     private int maxTicketCapacity;
     private int ticketReleaseRate;

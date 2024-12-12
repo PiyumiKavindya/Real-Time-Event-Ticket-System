@@ -4,7 +4,7 @@ package org.iit.eventsystem.service.impl;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.iit.eventsystem.domain.*;
-import org.iit.eventsystem.dto.ConfigDto;
+import org.iit.eventsystem.resources.ConfigResource;
 import org.iit.eventsystem.repository.*;
 import org.iit.eventsystem.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +64,7 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public Config resetConfigValue(ConfigDto configDto) {
+    public Config resetConfigValue(ConfigResource configResource) {
         log.info("Resetting configuration values...");
         Config config = configRepository.getConfigById(1L).orElse(new Config());
         if (config.getId() == null) {
@@ -72,10 +72,10 @@ public class ConfigServiceImpl implements ConfigService {
             log.info("New configuration created with ID: 1");
         }
 
-        config.setTotalTickets((long) configDto.getTotalTickets());
-        config.setMaxTicketCapacity((long) configDto.getTicketMaxCapacity());
-        config.setTicketReleaseRate((long) configDto.getTicketReleaseRate());
-        config.setCustomerRetrievalRate((long) configDto.getCustomerRetrievalRate());
+        config.setTotalTickets((long) configResource.getTotalTickets());
+        config.setMaxTicketCapacity((long) configResource.getTicketMaxCapacity());
+        config.setTicketReleaseRate((long) configResource.getTicketReleaseRate());
+        config.setCustomerRetrievalRate((long) configResource.getCustomerRetrievalRate());
 
         Config savedConfig = configRepository.save(config);
         log.info(String.format("Configuration saved with ID: %d, Values: %s", savedConfig.getId(), savedConfig));

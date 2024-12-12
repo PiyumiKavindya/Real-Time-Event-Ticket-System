@@ -1,15 +1,13 @@
 package org.iit.eventsystem.controller;
 
 import org.iit.eventsystem.domain.Config;
-import org.iit.eventsystem.dto.ConfigDto;
+import org.iit.eventsystem.resources.ConfigResource;
 import org.iit.eventsystem.service.ConfigService;
 import org.iit.eventsystem.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/config")
@@ -21,16 +19,16 @@ public class ConfigController {
     private VendorService vendorService;
 
     @PostMapping("/init-config")
-    public ResponseEntity<String> setConfigurations(@RequestBody ConfigDto configDto) {
+    public ResponseEntity<String> setConfigurations(@RequestBody ConfigResource configResource) {
         try {
             // Validate ConfigDto values
-            validateConfigDto(configDto);
+            validateConfigDto(configResource);
 
             // Extract fields and pass to VendorService
-            int totalTickets = configDto.getTotalTickets();
-            int maxCapacity = configDto.getTicketMaxCapacity();
-            int ticketReleaseRate = configDto.getTicketReleaseRate();
-            int customerRetrievalRate = configDto.getCustomerRetrievalRate();
+            int totalTickets = configResource.getTotalTickets();
+            int maxCapacity = configResource.getTicketMaxCapacity();
+            int ticketReleaseRate = configResource.getTicketReleaseRate();
+            int customerRetrievalRate = configResource.getCustomerRetrievalRate();
 
             vendorService.setConfigurations(totalTickets, maxCapacity, ticketReleaseRate, customerRetrievalRate);
             return ResponseEntity.ok("Parameters set successfully!");
@@ -58,42 +56,42 @@ public class ConfigController {
     }
 
     @PostMapping("/set-config")
-    public ResponseEntity<Config> resetConfig(@RequestBody ConfigDto configDto) {
+    public ResponseEntity<Config> resetConfig(@RequestBody ConfigResource configResource) {
         // Validate ConfigDto values manually
-        validateConfigDto(configDto);
+        validateConfigDto(configResource);
 
         // Proceed with the rest of the logic
-        Config config = configService.resetConfigValue(configDto);
+        Config config = configService.resetConfigValue(configResource);
         return ResponseEntity.ok(config);
     }
 
-    private void validateConfigDto(ConfigDto configDto) {
+    private void validateConfigDto(ConfigResource configResource) {
         // Validate individual fields
-        if (configDto.getTotalTickets() <= 0) {
+        if (configResource.getTotalTickets() <= 0) {
             throw new IllegalArgumentException("Total tickets must be greater than 0.");
         }
-        if (configDto.getTicketMaxCapacity() <= 0) {
+        if (configResource.getTicketMaxCapacity() <= 0) {
             throw new IllegalArgumentException("Max capacity must be greater than 0.");
         }
-        if (configDto.getTicketReleaseRate() <= 0) {
+        if (configResource.getTicketReleaseRate() <= 0) {
             throw new IllegalArgumentException("Ticket release rate must be greater than 0.");
         }
-        if (configDto.getCustomerRetrievalRate() <= 0) {
+        if (configResource.getCustomerRetrievalRate() <= 0) {
             throw new IllegalArgumentException("Customer retrieval rate must be greater than 0.");
         }
 
         // Additional validation: maxCapacity cannot exceed totalTickets
-        if (configDto.getTicketMaxCapacity() > configDto.getTotalTickets()) {
+        if (configResource.getTicketMaxCapacity() > configResource.getTotalTickets()) {
             throw new IllegalArgumentException("Max capacity cannot exceed total tickets.");
         }
 
         // Additional validation: ticketReleaseRate cannot exceed maxCapacity
-        if (configDto.getTicketReleaseRate() > configDto.getTicketMaxCapacity()) {
+        if (configResource.getTicketReleaseRate() > configResource.getTicketMaxCapacity()) {
             throw new IllegalArgumentException("Ticket release rate cannot exceed max capacity.");
         }
 
         // Additional validation: ticketReleaseRate cannot exceed totalTickets
-        if (configDto.getTicketReleaseRate() > configDto.getTotalTickets()) {
+        if (configResource.getTicketReleaseRate() > configResource.getTotalTickets()) {
             throw new IllegalArgumentException("Ticket release rate cannot exceed total tickets.");
         }
     }

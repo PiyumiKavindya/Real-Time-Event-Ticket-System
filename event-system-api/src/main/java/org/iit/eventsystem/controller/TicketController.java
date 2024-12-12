@@ -2,8 +2,8 @@ package org.iit.eventsystem.controller;
 
 import org.iit.eventsystem.domain.Config;
 import org.iit.eventsystem.domain.TicketPool;
-import org.iit.eventsystem.dto.TicketPoolStatus;
-import org.iit.eventsystem.dto.TicketRequestDto;
+import org.iit.eventsystem.resources.TicketPoolResource;
+import org.iit.eventsystem.resources.TicketRequesResource;
 import org.iit.eventsystem.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tickets")
-public class TicketPoolController {
+public class TicketController {
 
     @Autowired
     private ConfigService configService;
 
     @PostMapping("/add-tickets")
-    public ResponseEntity<String> addTickets(@RequestBody TicketRequestDto addRequest) {
+    public ResponseEntity<String> addTickets(@RequestBody TicketRequesResource addRequest) {
         // Validate the type field
         if (!"add".equalsIgnoreCase(addRequest.getType())) {
             return ResponseEntity.badRequest().body("Invalid type. Only 'add' is allowed.");
@@ -35,7 +35,7 @@ public class TicketPoolController {
     }
 
     @PostMapping("/purchase-tickets")
-    public ResponseEntity<String> purchaseTickets(@RequestBody TicketRequestDto purchaseRequest) {
+    public ResponseEntity<String> purchaseTickets(@RequestBody TicketRequesResource purchaseRequest) {
         if (!"purchase".equalsIgnoreCase(purchaseRequest.getType())) {
             return ResponseEntity.badRequest().body("Invalid type. Only 'purchase' is allowed.");
         }
@@ -50,7 +50,7 @@ public class TicketPoolController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<TicketPoolStatus> getTicketPoolStatus() {
+    public ResponseEntity<TicketPoolResource> getTicketPoolStatus() {
         Config currentConfig = configService.getCurrentConfig();
         TicketPool ticketPool = configService.getTicketPool();
 
@@ -59,7 +59,7 @@ public class TicketPoolController {
                     .body(null);  // Return an empty body on error
         }
 
-        TicketPoolStatus status = new TicketPoolStatus();
+        TicketPoolResource status = new TicketPoolResource();
         status.setAvailableTickets(ticketPool.getAvailableTickets());
         status.setReleasedTickets(ticketPool.getReleasedTickets());
         status.setTotalTickets(currentConfig.getTotalTickets());
